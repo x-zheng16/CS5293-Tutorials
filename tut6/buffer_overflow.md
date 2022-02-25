@@ -38,9 +38,9 @@ touch badfile
 ./stack
 ```
 
-## write shellcode
+## Write shellcode (optional)
 
-please
+Shellcode to launch a shell has been provided in call_sh_32.c. If you are interested in how the shellcode is written, please refer to generate_shellcode.ipynb or [Writing shellcode for Linux and \*BSD](http://www.kernel-panic.it/security/shellcode/index.html)
 
 ## Find the offset and the address of stack frame (ebp or rbp)
 
