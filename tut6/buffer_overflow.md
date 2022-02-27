@@ -25,7 +25,8 @@ sudo sysctl kernel.randomize_va_space
 # -m32 for 32-bit assembly
 # -z execstack for executable shellcode
 # -fno-stack-protector for turning off compiler protector
-gcc -Wall -g -m32 -z execstack -fno-stack-protector -o call_sh_32 call_sh_32.c
+gcc -Wall -g -m32 -z execstack -o call_sh_32 call_sh_32.c
+# gcc -Wall -g -z execstack -o call_sh_64 call_sh_64.c
 
 # launch a shell
 ./call_sh_32
