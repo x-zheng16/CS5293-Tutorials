@@ -33,6 +33,7 @@ gcc -Wall -g -m32 -z execstack -o call_sh_32 call_sh_32.c
 
 # compile the vulnerable program stack
 gcc -Wall -g -m32 -z execstack -fno-stack-protector -o stack_32 stack.c
+# gcc -Wall -g -z execstack -fno-stack-protector -o stack_64 stack.c
 
 # test slack with an empty badfile
 touch badfile
