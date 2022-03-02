@@ -6,5 +6,7 @@ int main()
 
     printf("Hello %.100x%n\n", 1, &count);
     printf("The value of count is %d\n", count);
+
+    printf("Hello %.100x%n\n");
     return 1;
 }
