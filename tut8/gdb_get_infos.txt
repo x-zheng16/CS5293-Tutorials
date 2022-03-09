@@ -1,0 +1,10 @@
+b unsafe_copy
+r
+p $ebp
+n
+x/100s *(char**)environ
+p system
+p &target_str
+p $ebp
+c
+q
