@@ -10,15 +10,24 @@ This repository contains the code for tutorials of CS5293 in CityU.
 ├── tut5
 │   └── setuid.md
 ├── tut6
-│   └── buffer_overflow.md          # experiment instruction
-│   └── call_sh_32.c                # test shellcode
-│   └── generate_shellcode.ipynb    # (optional) write shellcode
-│   └── stack.c                     # vulnerable source code
-│   └── template_exploit.py         # template for generation of badfile
-└── tut7
-    ├── task3.py
-    ├── task4.py
-    ├── task5(optional).py
-    ├── victim.c
-    └── width_modifier.c
+│   ├── buffer_overflow.md
+│   ├── call_sh_32.c
+│   ├── call_sh_64.c
+│   ├── generate_shellcode.ipynb
+│   ├── stack.c
+│   └── template_exploit.py
+├── tut7
+│   ├── task3.py
+│   ├── task4.py
+│   ├── task5(optional).py
+│   ├── victim.c
+│   └── width_modifier.c
+└── tut8
+    ├── call_sh_32.c
+    ├── gdb_get_infos.txt
+    ├── gdb_run.txt
+    ├── return_to_libc.md
+    ├── stack.c
+    ├── template_exploit.py
+    └── test_system.c
 ```
