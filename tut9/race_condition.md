@@ -1,5 +1,13 @@
 # Race Condition Attack
 
+## Questions after tut8
+
+1. `sudo ln -sf /bin/zsh /bin/sh` does not take effect. You should log out and log in to make the default shell changed.
+
+2. Notice the buffer name. Sometimes it is not `buffer` but `target_str` or something.
+
+3. Hints on Task 4.5 in Assignment 2. X stands for the offset of the first argument of `system()`. Y is the offset of the return address of `unsafe_copy()`. And Z is optional, which should be the offset of the return address of `system()`
+
 ## Step 1: Compile the vulnerable and attack programs
 
 ```bash
