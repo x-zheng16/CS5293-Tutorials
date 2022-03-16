@@ -13,7 +13,7 @@
 ```bash
 sudo sysctl -w fs.protected_symlinks=0
 
-sudo sysctl fs.protected_regular
+# sudo sysctl fs.protected_regular
 
 sudo cp /etc/passwd /etc/passwd.original
 
@@ -36,7 +36,7 @@ In Terminal 1, run
 In Terminal 2, run
 
 ```bash
-./target_process.sh
+bash target_process.sh
 ```
 
 ## Step 3: Improved attack

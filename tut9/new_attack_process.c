@@ -15,7 +15,7 @@ int main()
     while (1)
     {
         renameat2(0, "/tmp/XYZ", 0, "/tmp/ABC", flags);
-        usleep(10000);
+        usleep(100);
     }
 
     return 0;

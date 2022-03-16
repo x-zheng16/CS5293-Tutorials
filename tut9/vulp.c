@@ -9,7 +9,12 @@ int main()
     char buffer[60];
     FILE *fp;
 
-    /* get user input */
+    // uid_t ruid = getuid();
+    // uid_t euid = geteuid();
+    // printf("real user id is %d\n", ruid);
+    // printf("effective user id is %d\n", euid);
+    // seteuid(ruid);
+
     scanf("%50s", buffer);
 
     if (!access(fn, W_OK))
