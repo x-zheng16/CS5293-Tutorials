@@ -6,6 +6,7 @@
 exploit.py
 .vscode
 tmp.ipynb
+mysql_data/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
