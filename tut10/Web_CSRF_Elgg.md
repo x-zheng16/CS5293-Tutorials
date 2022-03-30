@@ -2,13 +2,13 @@
 
 This markdown file is converted from [Web_CSRF_Elgg.tex](https://github.com/seed-labs/seed-labs/blob/master/category-web/Web_CSRF_Elgg/Web_CSRF_Elgg.tex)
 
+Please download Labsetup.zip from <https://seedsecuritylabs.org/Labs_20.04/Files/Web_CSRF_Elgg/Labsetup.zip> to setup the lab environment.
+
 ## Overview
 
 The objective of this lab is to help students understand the Cross-Site Request Forgery (CSRF) attack. A CSRF attack involves a victim user, a trusted site, and a malicious site. The victim user holds an active session with a trusted site while visiting a malicious site. The malicious site injects an HTTP request for the trusted site into the victim user session, causing damages. In this lab, students will be attacking a social networking web application using the CSRF attack. The open-source social networking application is called `Elgg`, which has already been installed in our VM. `Elgg` has countermeasures against CSRF, but we have turned them off for the purpose of this lab. This lab covers the following topics:
 
 - Cross-Site Request Forgery attack
-
-- CSRF countermeasures: Secret token and Same-site cookie
 
 - HTTP GET and POST requests
 
@@ -18,7 +18,7 @@ The objective of this lab is to help students understand the Cross-Site Request 
 
 ### Docker Compose
 
-Download [Labsetup.zip](https://seedsecuritylabs.org/Labs_20.04/Files/Web_CSRF_Elgg/Labsetup.zip) to setup the lab environment.
+
 
 Check [docker/compose-commands](https://github.com/seed-labs/seed-labs/blob/master/manuals/docker/compose-commands.md) for more tips on how to use `docker-compose`.
 
@@ -108,7 +108,6 @@ We access the Elgg website, the attacker website, and the defense site using the
 
 ```plaintext
 10.9.0.5        www.seed-server.com
-10.9.0.6        www.example32.com
 10.9.0.105      www.attacker32.com
 ```
 
@@ -130,7 +129,7 @@ Elgg has implemented a countermeasure to defend against CSRF attacks. In Add-Fri
 
 After adding himself to Alice's friend list, Samy wants to do something more. He wants Alice to say "Samy is my Hero" in her profile, so everybody knows about that. Alice does not like Samy, let alone putting that statement in her profile. Samy plans to use a CSRF attack to achieve that goal. That is the purpose of this task.
 
-One way to do the attack is to post a message to Alice's Elgg account, hoping that Alice will click the URL inside the message. This URL will lead Alice to your (i.e., Samy's) malicious web site [www.attacker32.com](www.attacker32.com), where you can launch the CSRF attack.
+One way to do the attack is to post a message to Alice's Elgg account, hoping that Alice will click the URL inside the message. This URL will lead Alice to your (i.e., Samy's) malicious web site `www.attacker32.com`, where you can launch the CSRF attack.
 
 The objective of your attack is to modify the victim's profile. In particular, the attacker needs to forge a request to modify the profile information of the victim user of Elgg. Allowing users to modify their profiles is a feature of Elgg. If users want to modify their profiles, they go to the profile page of Elgg, fill out a form, and then submit the form---sending a POST request---to the server-side script `/profile/edit.php`, which processes the request and does the profile modification.
 

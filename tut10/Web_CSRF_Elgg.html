@@ -264,15 +264,13 @@ pre[data-line] .line-highlight[data-end]:after {
       <h1 class="mume-header" id="cross-site-request-forgery-csrf-attack">Cross-Site Request Forgery (CSRF) Attack</h1>
 
 <p>This markdown file is converted from <a href="https://github.com/seed-labs/seed-labs/blob/master/category-web/Web_CSRF_Elgg/Web_CSRF_Elgg.tex">Web_CSRF_Elgg.tex</a></p>
+<p>Please download Labsetup.zip from <a href="https://seedsecuritylabs.org/Labs_20.04/Files/Web_CSRF_Elgg/Labsetup.zip">https://seedsecuritylabs.org/Labs_20.04/Files/Web_CSRF_Elgg/Labsetup.zip</a> to setup the lab environment.</p>
 <h2 class="mume-header" id="overview">Overview</h2>
 
 <p>The objective of this lab is to help students understand the Cross-Site Request Forgery (CSRF) attack. A CSRF attack involves a victim user, a trusted site, and a malicious site. The victim user holds an active session with a trusted site while visiting a malicious site. The malicious site injects an HTTP request for the trusted site into the victim user session, causing damages. In this lab, students will be attacking a social networking web application using the CSRF attack. The open-source social networking application is called <code>Elgg</code>, which has already been installed in our VM. <code>Elgg</code> has countermeasures against CSRF, but we have turned them off for the purpose of this lab. This lab covers the following topics:</p>
 <ul>
 <li>
 <p>Cross-Site Request Forgery attack</p>
-</li>
-<li>
-<p>CSRF countermeasures: Secret token and Same-site cookie</p>
 </li>
 <li>
 <p>HTTP GET and POST requests</p>
@@ -285,7 +283,6 @@ pre[data-line] .line-highlight[data-end]:after {
 
 <h3 class="mume-header" id="docker-compose">Docker Compose</h3>
 
-<p>Download <a href="https://seedsecuritylabs.org/Labs_20.04/Files/Web_CSRF_Elgg/Labsetup.zip">Labsetup.zip</a> to setup the lab environment.</p>
 <p>Check <a href="https://github.com/seed-labs/seed-labs/blob/master/manuals/docker/compose-commands.md">docker/compose-commands</a> for more tips on how to use <code>docker-compose</code>.</p>
 <p>In this lab, we will use three websites. The first website is the vulnerable Elgg site accessible at <a href="www.seed-server.com">www.seed-server.com</a>. The second website is the attacker&apos;s malicious web site that is used for attacking Elgg. This web site is accessible via <a href="www.attacker32.com">www.attacker32.com</a>. The third website is used for the defense tasks, and its hostname is <a href="www.example32.com">www.example32.com</a>. We use containers to set up the lab environment.</p>
 <pre data-role="codeBlock" data-info="yml" class="language-yaml"><span class="token key atrule">version</span><span class="token punctuation">:</span> <span class="token string">&quot;3&quot;</span>
@@ -357,7 +354,6 @@ pre[data-line] .line-highlight[data-end]:after {
 
 <p>We access the Elgg website, the attacker website, and the defense site using their respective URLs. We need to add the following entries to the <code>/etc/hosts</code> file, so these hostnames are mapped to their corresponding IP addresses. You need to use the root privilege to change this file (using <code>sudo</code>). It should be noted that these names might have already been added to the file due to some other labs. If they are mapped to different IP addresses, the old entries must be removed.</p>
 <pre data-role="codeBlock" data-info="plaintext" class="language-plaintext">10.9.0.5        www.seed-server.com
-10.9.0.6        www.example32.com
 10.9.0.105      www.attacker32.com
 </pre><h2 class="mume-header" id="lab-tasks-attacks">Lab Tasks: Attacks</h2>
 
@@ -372,7 +368,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <h3 class="mume-header" id="task-3-csrf-attack-using-post-request">Task 3: CSRF Attack using POST Request</h3>
 
 <p>After adding himself to Alice&apos;s friend list, Samy wants to do something more. He wants Alice to say &quot;Samy is my Hero&quot; in her profile, so everybody knows about that. Alice does not like Samy, let alone putting that statement in her profile. Samy plans to use a CSRF attack to achieve that goal. That is the purpose of this task.</p>
-<p>One way to do the attack is to post a message to Alice&apos;s Elgg account, hoping that Alice will click the URL inside the message. This URL will lead Alice to your (i.e., Samy&apos;s) malicious web site <a href="www.attacker32.com">www.attacker32.com</a>, where you can launch the CSRF attack.</p>
+<p>One way to do the attack is to post a message to Alice&apos;s Elgg account, hoping that Alice will click the URL inside the message. This URL will lead Alice to your (i.e., Samy&apos;s) malicious web site <code>www.attacker32.com</code>, where you can launch the CSRF attack.</p>
 <p>The objective of your attack is to modify the victim&apos;s profile. In particular, the attacker needs to forge a request to modify the profile information of the victim user of Elgg. Allowing users to modify their profiles is a feature of Elgg. If users want to modify their profiles, they go to the profile page of Elgg, fill out a form, and then submit the form---sending a POST request---to the server-side script <code>/profile/edit.php</code>, which processes the request and does the profile modification.</p>
 <p>The server-side script <code>edit.php</code> accepts both GET and POST requests, so you can use the same trick as that in Task 1 to achieve the attack. However, in this task, you are required to use the POST request. Namely, attackers (you) need to forge an HTTP POST request from the victim&apos;s browser, when the victim is visiting their malicious site. Attackers need to know the structure of such a request. You can observe the structure of the request, i.e., the parameters of the request, by making some modifications to the profile and monitoring the request using the <code>&quot;HTTP Header Live&quot;</code> tool. You may see something similar to the following. Unlike HTTP <code>GET</code> requests, which append parameters to the URL strings, the parameters of HTTP <code>POST</code> requests are included in the HTTP message body (see the contents between the two symbols):</p>
 <pre data-role="codeBlock" data-info="text" class="language-text">http://www.seed-server.com/action/profile/edit
