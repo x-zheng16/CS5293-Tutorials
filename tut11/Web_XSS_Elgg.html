@@ -291,6 +291,44 @@ pre[data-line] .line-highlight[data-end]:after {
 </ul>
 <h2 class="mume-header" id="lab-environment-setup">Lab Environment Setup</h2>
 
+<h3 class="mume-header" id="account-in-elgg-container">Account in Elgg Container</h3>
+
+<table>
+<thead>
+<tr>
+<th>Account</th>
+<th>Password</th>
+<th>Remark</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Alice</td>
+<td>seedalice</td>
+<td>Victim</td>
+</tr>
+<tr>
+<td>Boby</td>
+<td>seedboby</td>
+<td>Task 4: Self-Propagating XSS Worm</td>
+</tr>
+<tr>
+<td>Charlie</td>
+<td>seedcharlie</td>
+<td>Task 3: Modify Profile</td>
+</tr>
+<tr>
+<td>Samy</td>
+<td>seedsamy</td>
+<td>Task 2: Add friends</td>
+</tr>
+<tr>
+<td>admin</td>
+<td>seedadmin</td>
+<td>Admin</td>
+</tr>
+</tbody>
+</table>
 <h3 class="mume-header" id="dns-setup">DNS Setup</h3>
 
 <p>We have set up several websites for this lab. They are hosted by the container <code>10.9.0.5</code>. We need to map the names of the web server to this IP address. Please add the following entries to <code>/etc/hosts</code>. You need to use the root privilege to modify this file:</p>
@@ -308,21 +346,21 @@ pre[data-line] .line-highlight[data-end]:after {
 
 <p>The objective of this task is to embed a JavaScript program in your <code>Elgg</code> profile, such that when another user views your profile, the JavaScript program will be executed and an alert window will be displayed. The following JavaScript program will display an alert window:</p>
 <pre data-role="codeBlock" data-info="html" class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>text/javascript<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span><span class="token script"><span class="token language-javascript">
-    <span class="token function">alert</span><span class="token punctuation">(</span><span class="token string">&quot;XSS&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">alert</span><span class="token punctuation">(</span><span class="token string">&quot;XSS&quot;</span><span class="token punctuation">)</span>
 </span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
 </pre><p>If you embed the above JavaScript code in your profile (e.g. in the brief description field), then any user who views your profile will see the alert window.</p>
 <p>In this case, the JavaScript code is short enough to be typed into the short description field. If you want to run a long JavaScript, but you are limited by the number of characters you can type in the form, you can store the JavaScript program in a standalone file, save it with the .js extension, and then refer to it using the <code>src</code> attribute in the <code>&lt;script&gt;</code> tag. See the following example:</p>
 <pre data-role="codeBlock" data-info="html" class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>text/javascript<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span><span class="token script"><span class="token language-javascript">
     <span class="token comment">// src is used to specifies the URL of an external script file</span>
-    src<span class="token operator">=</span><span class="token string">&quot;http://www.example.com/myscripts.js&quot;</span><span class="token operator">&gt;</span> 
+    src<span class="token operator">=</span><span class="token string">&quot;http://www.example.com/myscripts.js&quot;</span><span class="token operator">&gt;</span>
 </span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
 </pre><p>In the above example, the page will fetch the JavaScript program from <code>http://www.example.com</code>, which can be any web server.</p>
 <h2 class="mume-header" id="task-2-posting-a-malicious-message-to-display-cookies">Task 2: Posting a Malicious Message to Display Cookies</h2>
 
 <p>The objective of this task is to embed a JavaScript program in your <code>Elgg</code> profile, such that when another user views your profile, the user&apos;s cookies will be displayed in the alert window. This can be done by adding some additional code to the JavaScript program in the previous task:</p>
 <pre data-role="codeBlock" data-info="html" class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>text/javascript<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span><span class="token script"><span class="token language-javascript">
-    <span class="token keyword keyword-var">var</span> cookie <span class="token operator">=</span> <span class="token dom variable">document</span><span class="token punctuation">.</span><span class="token property-access">cookie</span><span class="token punctuation">;</span>
-    <span class="token function">alert</span><span class="token punctuation">(</span>cookie<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-var">var</span> cookie <span class="token operator">=</span> <span class="token dom variable">document</span><span class="token punctuation">.</span><span class="token property-access">cookie</span>
+    <span class="token function">alert</span><span class="token punctuation">(</span>cookie<span class="token punctuation">)</span>
 </span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
 </pre><h2 class="mume-header" id="task-3-becoming-the-victims-friend">Task 3: Becoming the Victim&apos;s Friend</h2>
 
@@ -414,7 +452,7 @@ essentially infecting the profile with the same worm.</p>
 <p>This sub-section is only for information, and there is no specific task to do. It shows how Elgg defends against the XSS attack. Elgg does have built-in countermeasures, and we have disabled them to make the attack work. Actually, Elgg uses two countermeasures. One is a custom built security plugin <code>HTMLawed</code>, which validates the user input and removes the tags from the input. We have commented out the invocation of the plugin inside the <code>filter_tags()</code> function in <code>input.php</code>. See the following:</p>
 <pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token keyword keyword-function">function</span> <span class="token function">filter_tags</span><span class="token punctuation">(</span><span class="token parameter">$<span class="token keyword keyword-var">var</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token comment">// return elgg_trigger_plugin_hook(&apos;validate&apos;, &apos;input&apos;, null, $var);</span>
-    <span class="token keyword control-flow keyword-return">return</span> $<span class="token keyword keyword-var">var</span><span class="token punctuation">;</span>
+    <span class="token keyword control-flow keyword-return">return</span> $<span class="token keyword keyword-var">var</span>
 <span class="token punctuation">}</span>
 </pre><p>In addition to <code>HTMLawed</code>, Elgg also uses PHP&apos;s built-in method <code>htmlspecialchars()</code> to encode the special characters in user input, such as encoding <code>&quot;&lt;&quot;</code> to <code>&quot;&amp;lt&quot;</code>, <code>&quot;&gt;&quot;</code> to <code>&quot;&amp;gt&quot;</code>, etc. This method is invoked in <code>dropdown.php</code>, <code>text.php</code>, and <code>url.php</code> inside the folder. We have commented them out to turn off the countermeasure.</p>
 

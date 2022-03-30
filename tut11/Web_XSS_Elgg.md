@@ -24,6 +24,16 @@ In this lab, students need to exploit this vulnerability to launch an XSS attack
 
 ## Lab Environment Setup
 
+### Account in Elgg Container
+
+| Account | Password    | Remark                            |
+| ------- | ----------- | --------------------------------- |
+| Alice   | seedalice   | Victim                            |
+| Boby    | seedboby    | Task 4: Self-Propagating XSS Worm |
+| Charlie | seedcharlie | Task 3: Modify Profile            |
+| Samy    | seedsamy    | Task 2: Add friends               |
+| admin   | seedadmin   | Admin                             |
+
 ### DNS Setup
 
 We have set up several websites for this lab. They are hosted by the container `10.9.0.5`. We need to map the names of the web server to this IP address. Please add the following entries to `/etc/hosts`. You need to use the root privilege to modify this file:
@@ -50,7 +60,7 @@ The objective of this task is to embed a JavaScript program in your `Elgg` profi
 
 ```html
 <script type="text/javascript">
-    alert("XSS");
+    alert("XSS")
 </script>
 ```
 
@@ -61,7 +71,7 @@ In this case, the JavaScript code is short enough to be typed into the short des
 ```html
 <script type="text/javascript">
     // src is used to specifies the URL of an external script file
-    src="http://www.example.com/myscripts.js"> 
+    src="http://www.example.com/myscripts.js">
 </script>
 ```
 
@@ -73,8 +83,8 @@ The objective of this task is to embed a JavaScript program in your `Elgg` profi
 
 ```html
 <script type="text/javascript">
-    var cookie = document.cookie;
-    alert(cookie);
+    var cookie = document.cookie
+    alert(cookie)
 </script>
 ```
 
@@ -197,7 +207,7 @@ This sub-section is only for information, and there is no specific task to do. I
 ```js
 function filter_tags($var) {
     // return elgg_trigger_plugin_hook('validate', 'input', null, $var);
-    return $var;
+    return $var
 }
 ```
 
