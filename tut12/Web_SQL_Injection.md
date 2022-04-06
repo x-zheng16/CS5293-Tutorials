@@ -1,5 +1,7 @@
 # SQL Injection Attack Lab
 
+Download Labsetup.zip from <https://seedsecuritylabs.org/Labs_20.04/Files/Web_SQL_Injection/Labsetup.zip>
+
 ## Overview
 
 SQL injection is a code injection technique that exploits the vulnerabilities in the interface between web applications and database servers. The vulnerability is present when user’s inputs are not correctly checked within the web applications before being sent to the back-end database servers.
@@ -69,8 +71,9 @@ After running the commands above, you need to use a SQL command to print all the
 ```sql
 mysql> select * from credential;
 mysql> select Name, EID, Salary from credential;
-mysql> update credential set Salary=0 where Name='Bob';
-mysql> select * from credential where Name='Boby';
+mysql> select * from credential where Name='Boby';#comment here
+mysql> update credential set Salary=0 where Name='Boby';
+mysql> select * from credential where Name='Boby';-- comment here
 mysql> quit
 ```
 
@@ -90,7 +93,7 @@ $hashed_pwd = sha1($input_pwd);
 $sql = "SELECT id, name, eid, salary, birth, ssn, address, email,
                 nickname, Password
         FROM credential
-        WHERE name= '$input_uname' and Password='$hashed_pwd'";
+        WHERE Name= '$input_uname' and Password='$hashed_pwd'";
 $result = $conn -> query($sql);
 
 // The following is Pseudo Code
@@ -116,7 +119,7 @@ Your task is to log into the web application as the administrator from the login
 Your task is to repeat Task 2.1, but you need to do it without using the webpage. You can use command line tools, such as `curl`, which can send HTTP requests. One thing that is worth mentioning is that if you want to include multiple parameters in HTTP requests, you need to put the URL and the parameters between a pair of single quotes; otherwise, the special characters used to separate parameters (such as `&`) will be interpreted by the shell program, changing the meaning of the command. The following example shows how to send an HTTP GET request to our web application, with two parameters (`username` and `Password`) attached:
 
 ```shell
-curl 'www.seed-server.com/unsafe_home.php?username=alice&Password=11'
+curl 'www.seed-server.com/unsafe_home.php?username=alice&Password=seedalice'
 ```
 
 If you need to include special characters in the `username` or `Password` fields, you need to encode them properly, or they can change the meaning of your requests. If you want to include single quote in those fields, you should use `%27` instead; if you want to include white space, you should use `%20`. In this task, you do need to handle HTTP encoding while sending requests using `curl`.
