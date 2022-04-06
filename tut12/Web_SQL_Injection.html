@@ -1,0 +1,503 @@
+<!DOCTYPE html><html><head>
+      <title>Web_SQL_Injection</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="file:////home/seed/.vscode-server/extensions/shd101wyy.markdown-preview-enhanced-0.6.2/node_modules/@shd101wyy/mume/dependencies/katex/katex.min.css">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <style>
+      /**
+ * prism.js Github theme based on GitHub's theme.
+ * @author Sam Clarke
+ */
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #333;
+  background: none;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.4;
+
+  -moz-tab-size: 8;
+  -o-tab-size: 8;
+  tab-size: 8;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+  padding: .8em;
+  overflow: auto;
+  /* border: 1px solid #ddd; */
+  border-radius: 3px;
+  /* background: #fff; */
+  background: #f5f5f5;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+  padding: .1em;
+  border-radius: .3em;
+  white-space: normal;
+  background: #f5f5f5;
+}
+
+.token.comment,
+.token.blockquote {
+  color: #969896;
+}
+
+.token.cdata {
+  color: #183691;
+}
+
+.token.doctype,
+.token.punctuation,
+.token.variable,
+.token.macro.property {
+  color: #333;
+}
+
+.token.operator,
+.token.important,
+.token.keyword,
+.token.rule,
+.token.builtin {
+  color: #a71d5d;
+}
+
+.token.string,
+.token.url,
+.token.regex,
+.token.attr-value {
+  color: #183691;
+}
+
+.token.property,
+.token.number,
+.token.boolean,
+.token.entity,
+.token.atrule,
+.token.constant,
+.token.symbol,
+.token.command,
+.token.code {
+  color: #0086b3;
+}
+
+.token.tag,
+.token.selector,
+.token.prolog {
+  color: #63a35c;
+}
+
+.token.function,
+.token.namespace,
+.token.pseudo-element,
+.token.class,
+.token.class-name,
+.token.pseudo-class,
+.token.id,
+.token.url-reference .token.variable,
+.token.attr-name {
+  color: #795da3;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+.token.title,
+.token.title .token.punctuation {
+  font-weight: bold;
+  color: #1d3e81;
+}
+
+.token.list {
+  color: #ed6a43;
+}
+
+.token.inserted {
+  background-color: #eaffea;
+  color: #55a532;
+}
+
+.token.deleted {
+  background-color: #ffecec;
+  color: #bd2c00;
+}
+
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+
+/* JSON */
+.language-json .token.property {
+  color: #183691;
+}
+
+.language-markup .token.tag .token.punctuation {
+  color: #333;
+}
+
+/* CSS */
+code.language-css,
+.language-css .token.function {
+  color: #0086b3;
+}
+
+/* YAML */
+.language-yaml .token.atrule {
+  color: #63a35c;
+}
+
+code.language-yaml {
+  color: #183691;
+}
+
+/* Ruby */
+.language-ruby .token.function {
+  color: #333;
+}
+
+/* Markdown */
+.language-markdown .token.url {
+  color: #795da3;
+}
+
+/* Makefile */
+.language-makefile .token.symbol {
+  color: #795da3;
+}
+
+.language-makefile .token.variable {
+  color: #183691;
+}
+
+.language-makefile .token.builtin {
+  color: #0086b3;
+}
+
+/* Bash */
+.language-bash .token.keyword {
+  color: #0086b3;
+}
+
+/* highlight */
+pre[data-line] {
+  position: relative;
+  padding: 1em 0 1em 3em;
+}
+pre[data-line] .line-highlight-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: transparent;
+  display: block;
+  width: 100%;
+}
+
+pre[data-line] .line-highlight {
+  position: absolute;
+  left: 0;
+  right: 0;
+  padding: inherit 0;
+  margin-top: 1em;
+  background: hsla(24, 20%, 50%,.08);
+  background: linear-gradient(to right, hsla(24, 20%, 50%,.1) 70%, hsla(24, 20%, 50%,0));
+  pointer-events: none;
+  line-height: inherit;
+  white-space: pre;
+}
+
+pre[data-line] .line-highlight:before, 
+pre[data-line] .line-highlight[data-end]:after {
+  content: attr(data-start);
+  position: absolute;
+  top: .4em;
+  left: .6em;
+  min-width: 1em;
+  padding: 0 .5em;
+  background-color: hsla(24, 20%, 50%,.4);
+  color: hsl(24, 20%, 95%);
+  font: bold 65%/1.5 sans-serif;
+  text-align: center;
+  vertical-align: .3em;
+  border-radius: 999px;
+  text-shadow: none;
+  box-shadow: 0 1px white;
+}
+
+pre[data-line] .line-highlight[data-end]:after {
+  content: attr(data-end);
+  top: auto;
+  bottom: .4em;
+}html body{font-family:"Helvetica Neue",Helvetica,"Segoe UI",Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ul,html body>ol{margin-bottom:16px}html body ul,html body ol{padding-left:2em}html body ul.no-list,html body ol.no-list{padding:0;list-style-type:none}html body ul ul,html body ul ol,html body ol ol,html body ol ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;background-color:#f0f0f0;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:bold;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:bold}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em !important;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::before,html body code::after{letter-spacing:-0.2em;content:"\00a0"}html body pre>code{padding:0;margin:0;font-size:.85em !important;word-break:normal;white-space:pre;background:transparent;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;font-size:.85em !important;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:before,html body pre tt:before,html body pre code:after,html body pre tt:after{content:normal}html body p,html body blockquote,html body ul,html body ol,html body dl,html body pre{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body pre,html body code{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview .pagebreak,.markdown-preview .newpage{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center !important}.markdown-preview:not([for="preview"]) .code-chunk .btn-group{display:none}.markdown-preview:not([for="preview"]) .code-chunk .status{display:none}.markdown-preview:not([for="preview"]) .code-chunk .output-div{margin-bottom:16px}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0}@media screen and (min-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{font-size:14px !important;padding:1em}}@media print{html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,0.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{padding:0 1.6em;margin-top:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc li{margin-bottom:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{list-style-type:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% -  300px);padding:2em calc(50% - 457px -  150px);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+
+      </style>
+    </head>
+    <body for="html-export">
+      <div class="mume markdown-preview  ">
+      <h1 class="mume-header" id="sql-injection-attack-lab">SQL Injection Attack Lab</h1>
+
+<h2 class="mume-header" id="overview">Overview</h2>
+
+<p>SQL injection is a code injection technique that exploits the vulnerabilities in the interface between web applications and database servers. The vulnerability is present when user&#x2019;s inputs are not correctly checked within the web applications before being sent to the back-end database servers.</p>
+<p>Many web applications take inputs from users, and then use these inputs to construct SQL queries, so they can get information from the database. Web applications also use SQL queries to store information in the database. These are common practices in the development of web applications. When SQL queries are not carefully constructed, SQL injection vulnerabilities can occur. SQL injection is one of the most common attacks on web applications.</p>
+<p>In this lab, we have created a web application that is vulnerable to the SQL injection attack. Our web application includes the common mistakes made by many web developers. Students&#x2019; goal is to find ways to exploit the SQL injection vulnerabilities, demonstrate the damage that can be achieved by the attack, and master the techniques that can help defend against such type of attacks. This lab covers the following topics:</p>
+<ul>
+<li>
+<p>SQL statements: <code>SELECT</code> and <code>UPDATE</code> statements</p>
+</li>
+<li>
+<p>SQL injection</p>
+</li>
+<li>
+<p>Prepared statement</p>
+</li>
+</ul>
+<h2 class="mume-header" id="lab-environment">Lab Environment</h2>
+
+<p>We have developed a web application for this lab, and we use containers to set up this web application. There are two containers in the lab setup, one for hosting the web application, and the other for hosting the database for the web application. The IP address for the web application container is <code>10.9.0.5</code>, and The URL for the web application <code>http://www.seed-server.com</code>. We need to map this hostname to the container&#x2019;s IP address. Please add the following entry to the <code>/etc/hosts</code> file. You need to use the root privilege to change this file (using <code>sudo</code>). It should be noted that this name might have already been added to the file due to some other labs. If it is mapped to a different IP address, the old entry must be<br>
+removed.</p>
+<pre data-role="codeBlock" data-info="text" class="language-text">10.9.0.5        www.seed-server.com
+</pre><p>We have created a web application, which is a simple employee management application. Employees can view and update their personal information in the database through this web application. There are mainly two roles in this web application: <strong>Administrator</strong> is a privilege role and can manage each individual employees&#x2019; profile information; <strong>Employee</strong> is a normal role and can view or update his/her own profile information. All employee information is described in the following table.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Employee ID</th>
+<th>Password</th>
+<th>Salary</th>
+<th>Birthday</th>
+<th>SSN</th>
+<th>Nickname</th>
+<th>Email</th>
+<th>Address</th>
+<th>Phone</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Admin</td>
+<td>99999</td>
+<td>seedadmin</td>
+<td>400000</td>
+<td>3/5</td>
+<td colspan="5">43254314</td>
+
+
+
+
+</tr>
+<tr>
+<td>Alice</td>
+<td>10000</td>
+<td>seedalice</td>
+<td>20000</td>
+<td>9/20</td>
+<td colspan="5">10211002</td>
+
+
+
+
+</tr>
+<tr>
+<td>Boby</td>
+<td>20000</td>
+<td>seedboby</td>
+<td>50000</td>
+<td>4/20</td>
+<td colspan="5">10213352</td>
+
+
+
+
+</tr>
+<tr>
+<td>Ryan</td>
+<td>30000</td>
+<td>seedryan</td>
+<td>90000</td>
+<td>4/10</td>
+<td colspan="5">32193525</td>
+
+
+
+
+</tr>
+<tr>
+<td>Samy</td>
+<td>40000</td>
+<td>seedsamy</td>
+<td>40000</td>
+<td>1/11</td>
+<td colspan="5">32111111</td>
+
+
+
+
+</tr>
+<tr>
+<td>Ted</td>
+<td>50000</td>
+<td>seedted</td>
+<td>110000</td>
+<td>11/3</td>
+<td colspan="5">24343244</td>
+
+
+
+
+</tr>
+</tbody>
+</table>
+<h2 class="mume-header" id="lab-tasks">Lab Tasks</h2>
+
+<h3 class="mume-header" id="task-1-get-familiar-with-sql-statements">Task 1: Get Familiar with SQL Statements</h3>
+
+<p>The objective of this task is to get familiar with SQL commands by playing with the provided database. The data used by our web application is stored in a MySQL database, which is hosted on our MySQL container. We have created a database called <code>sqllab_users</code>, which contains a table called <code>credential</code>. The table stores the personal information (e.g. eid, password, salary, ssn, etc.) of every employee. In this task, you need to play with the database to get familiar with SQL queries.</p>
+<p>Please get a shell on the MySQL container (see the container manual for instruction; the manual is linked to the lab&#x2019;s website). Then use the <code>mysql</code> client program to interact with the database. The user name is <code>root</code> and password is <code>dees</code>.</p>
+<pre data-role="codeBlock" data-info="shell" class="language-shell"><span class="token comment"># check container id</span>
+docker <span class="token function">ps</span> -a
+<span class="token comment"># get a shell</span>
+docker <span class="token builtin class-name">exec</span> -it ID_MYSQL /bin/bash
+<span class="token comment"># Inside the MySQL container</span>
+mysql -uroot -pdees
+</pre><p>After login, you can create new database or load an existing one. As we have already created the <code>sqllab_users</code> database for you, you just need to load this existing database using the <code>use</code> command. To show what tables are there in the <code>sqllab_users</code> database, you can use the <code>show tables</code> command to print out all the tables of the selected database.</p>
+<pre data-role="codeBlock" data-info="sql" class="language-sql">mysql<span class="token operator">&gt;</span> <span class="token keyword keyword-show">show</span> <span class="token keyword keyword-databases">databases</span><span class="token punctuation">;</span>
+mysql<span class="token operator">&gt;</span> <span class="token keyword keyword-use">use</span> sqllab_users<span class="token punctuation">;</span>
+mysql<span class="token operator">&gt;</span> <span class="token keyword keyword-show">show</span> <span class="token keyword keyword-tables">tables</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">------------------------+</span>
+<span class="token operator">|</span> Tables_in_sqllab_users <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------------------------+</span>
+<span class="token operator">|</span> credential             <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------------------------+</span>
+</pre><p>After running the commands above, you need to use a SQL command to print all the profile information of the employee Alice. Please provide the screenshot of your results.</p>
+<pre data-role="codeBlock" data-info="sql" class="language-sql">mysql<span class="token operator">&gt;</span> <span class="token keyword keyword-select">select</span> <span class="token operator">*</span> <span class="token keyword keyword-from">from</span> credential<span class="token punctuation">;</span>
+mysql<span class="token operator">&gt;</span> <span class="token keyword keyword-select">select</span> Name<span class="token punctuation">,</span> EID<span class="token punctuation">,</span> Salary <span class="token keyword keyword-from">from</span> credential<span class="token punctuation">;</span>
+mysql<span class="token operator">&gt;</span> <span class="token keyword keyword-update">update</span> credential <span class="token keyword keyword-set">set</span> Salary<span class="token operator">=</span><span class="token number">0</span> <span class="token keyword keyword-where">where</span> Name<span class="token operator">=</span><span class="token string">&apos;Bob&apos;</span><span class="token punctuation">;</span>
+mysql<span class="token operator">&gt;</span> <span class="token keyword keyword-select">select</span> <span class="token operator">*</span> <span class="token keyword keyword-from">from</span> credential <span class="token keyword keyword-where">where</span> Name<span class="token operator">=</span><span class="token string">&apos;Boby&apos;</span><span class="token punctuation">;</span>
+mysql<span class="token operator">&gt;</span> quit
+</pre><h3 class="mume-header" id="task-2-sql-injection-attack-on-select-statement">Task 2: SQL Injection Attack on SELECT Statement</h3>
+
+<p>SQL injection is basically a technique through which attackers can execute their own malicious SQL statements generally referred as malicious payload. Through the malicious SQL statements, attackers can steal information from the victim database; even worse, they may be able to make changes to the database. Our employee management web application has SQL injection vulnerabilities, which mimic the mistakes frequently made by developers.</p>
+<p>We will use the login page from <a href="www.seed-server.com">www.seed-server.com</a> for this task. It asks users to provide a user name and a password. The web application authenticate users based on these two pieces of data, so only employees who know their passwords are allowed to log in. Your job, as an attacker, is to log into the web application without knowing any employee&#x2019;s credential.</p>
+<p>To help you started with this task, we explain how authentication is implemented in the web application. The PHP code <code>unsafe_home.php</code> is used to conduct user authentication. The following code snippet show how users are authenticated.</p>
+<pre data-role="codeBlock" data-info="php" class="language-php"><span class="token variable">$input_uname</span> <span class="token operator">=</span> <span class="token global">$_GET</span><span class="token punctuation">[</span><span class="token string single-quoted-string">&apos;username&apos;</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token variable">$input_pwd</span> <span class="token operator">=</span> <span class="token global">$_GET</span><span class="token punctuation">[</span><span class="token string single-quoted-string">&apos;Password&apos;</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token variable">$hashed_pwd</span> <span class="token operator">=</span> <span class="token function">sha1</span><span class="token punctuation">(</span><span class="token variable">$input_pwd</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">...</span>
+<span class="token variable">$sql</span> <span class="token operator">=</span> <span class="token string double-quoted-string">&quot;SELECT id, name, eid, salary, birth, ssn, address, email,
+                nickname, Password
+        FROM credential
+        WHERE name= &apos;<span class="token interpolation"><span class="token variable">$input_uname</span></span>&apos; and Password=&apos;<span class="token interpolation"><span class="token variable">$hashed_pwd</span></span>&apos;&quot;</span><span class="token punctuation">;</span>
+<span class="token variable">$result</span> <span class="token operator">=</span> <span class="token variable">$conn</span> <span class="token operator">-&gt;</span> <span class="token function">query</span><span class="token punctuation">(</span><span class="token variable">$sql</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// The following is Pseudo Code</span>
+<span class="token keyword keyword-if">if</span><span class="token punctuation">(</span>id <span class="token operator">!=</span> <span class="token constant">NULL</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-if">if</span><span class="token punctuation">(</span>name<span class="token operator">==</span><span class="token string single-quoted-string">&apos;admin&apos;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword keyword-return">return</span> All employees information<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword keyword-else">else</span> <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>name <span class="token operator">!=</span><span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword keyword-return">return</span> employee information<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span> <span class="token keyword keyword-else">else</span> <span class="token punctuation">{</span>
+    Authentication Fails<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre><p>The above SQL statement selects personal employee information such as id, name, salary, ssn etc from the <code>credential</code> table. The SQL statement uses two variables <code>input_uname</code> and <code>hashed_pwd</code>, where <code>input_uname</code> holds the string typed by users in the username field of the login page, while <code>hashed_pwd</code> holds the <code>sha1</code> hash of the password typed by the user. The program checks whether any record matches with the provided username and password; if there is a match, the user is successfully authenticated, and is given the corresponding employee information. If there is no match, the authentication fails.</p>
+<h4 class="mume-header" id="task-21-sql-injection-attack-from-webpage">Task 2.1: SQL Injection Attack from webpage</h4>
+
+<p>Your task is to log into the web application as the administrator from the login page, so you can see the information of all the employees. We assume that you do know the administrator&#x2019;s account name which is <code>admin</code>, but you do not the password. You need to decide what to type in the <code>Username</code> and <code>Password</code> fields to succeed in the attack.</p>
+<h4 class="mume-header" id="task-22-sql-injection-attack-from-command-line">Task 2.2: SQL Injection Attack from command line</h4>
+
+<p>Your task is to repeat Task 2.1, but you need to do it without using the webpage. You can use command line tools, such as <code>curl</code>, which can send HTTP requests. One thing that is worth mentioning is that if you want to include multiple parameters in HTTP requests, you need to put the URL and the parameters between a pair of single quotes; otherwise, the special characters used to separate parameters (such as <code>&amp;</code>) will be interpreted by the shell program, changing the meaning of the command. The following example shows how to send an HTTP GET request to our web application, with two parameters (<code>username</code> and <code>Password</code>) attached:</p>
+<pre data-role="codeBlock" data-info="shell" class="language-shell"><span class="token function">curl</span> <span class="token string">&apos;www.seed-server.com/unsafe_home.php?username=alice&amp;Password=11&apos;</span>
+</pre><p>If you need to include special characters in the <code>username</code> or <code>Password</code> fields, you need to encode them properly, or they can change the meaning of your requests. If you want to include single quote in those fields, you should use <code>%27</code> instead; if you want to include white space, you should use <code>%20</code>. In this task, you do need to handle HTTP encoding while sending requests using <code>curl</code>.</p>
+<h4 class="mume-header" id="task-23-append-a-new-sql-statement">Task 2.3: Append a new SQL statement</h4>
+
+<p>In the above two attacks, we can only steal information from the database; it will be better if we can modify the database using the same vulnerability in the login page. An idea is to use the SQL injection attack to turn one SQL statement into two, with the second one being the update or delete statement. In SQL, semicolon (&#x1F609; is used to separate two SQL statements. Please try to run two SQL statements via the login page.</p>
+<p>There is a countermeasure preventing you from running two SQL statements in this attack. Please use the SEED book or resources from the Internet to figure out what this countermeasure is, and describe your discovery in the lab report.</p>
+<h3 class="mume-header" id="task-3-sql-injection-attack-on-update-statement">Task 3: SQL Injection Attack on UPDATE Statement</h3>
+
+<p>If a SQL injection vulnerability happens to an UPDATE statement, the damage will be more severe, because attackers can use the vulnerability to modify databases. In our Employee Management application, there is an Edit Profile page that allows employees to update their profile information, including nickname, email, address, phone number, and password. To go to this page, employees need to log in first.</p>
+<p>When employees update their information through the Edit Profile page, the following SQL UPDATE query will be executed. The PHP code implemented in <code>unsafe_edit_backend.php</code> file is used to update employee&#x2019;s profile information. The PHP file is located in the <code>/var/www/SQLInjection</code> directory.</p>
+<pre data-role="codeBlock" data-info="php" class="language-php"><span class="token variable">$hashed_pwd</span> <span class="token operator">=</span> <span class="token function">sha1</span><span class="token punctuation">(</span><span class="token variable">$input_pwd</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$sql</span> <span class="token operator">=</span> <span class="token string double-quoted-string">&quot;UPDATE credential SET
+    nickname=&apos;<span class="token interpolation"><span class="token variable">$input_nickname</span></span>&apos;,
+    email=&apos;<span class="token interpolation"><span class="token variable">$input_email</span></span>&apos;,
+    address=&apos;<span class="token interpolation"><span class="token variable">$input_address</span></span>&apos;,
+    Password=&apos;<span class="token interpolation"><span class="token variable">$hashed_pwd</span></span>&apos;,
+    PhoneNumber=&apos;<span class="token interpolation"><span class="token variable">$input_phonenumber</span></span>&apos;
+    WHERE ID=<span class="token interpolation"><span class="token variable">$id</span></span>;&quot;</span><span class="token punctuation">;</span>
+<span class="token variable">$conn</span><span class="token operator">-&gt;</span><span class="token function">query</span><span class="token punctuation">(</span><span class="token variable">$sql</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</pre><h4 class="mume-header" id="task-31-modify-your-own-salary">Task 3.1: Modify your own salary</h4>
+
+<p>As shown in the Edit Profile page, employees can only update their nicknames, emails, addresses, phone numbers, and passwords; they are not authorized to change their salaries. Assume that you (Alice) are a disgruntled employee, and your boss Boby did not increase your salary this year. You want to increase your own salary by exploiting the SQL injection vulnerability in the Edit-Profile page. Please demonstrate how you can achieve that. We assume that you do know that salaries are stored in a column called <code>salary</code>.</p>
+<h4 class="mume-header" id="task-32-modify-other-people-salary">Task 3.2: Modify other people&#x2019; salary</h4>
+
+<p>After increasing your own salary, you decide to punish your boss Boby. You want to reduce his salary to 1 dollar. Please demonstrate how you can achieve that.</p>
+<h4 class="mume-header" id="task-33-modify-other-people-password">Task 3.3: Modify other people&#x2019; password</h4>
+
+<p>After changing Boby&#x2019;s salary, you are still disgruntled, so you want to change Boby&#x2019;s password to something that you know, and then you can log into his account and do further damage. Please demonstrate how you can achieve that. You need to demonstrate that you can successfully log into Boby&#x2019;s account using the new password. One thing worth mentioning here is that the database stores the hash value of passwords instead of the plaintext password string. You can again look at the <code>unsafe_edit_backend.php</code> code to see how password is being stored. It uses SHA1 hash function to generate the hash value of password.</p>
+<h2 class="mume-header" id="task-4-countermeasure-prepared-statement">Task 4: Countermeasure &#x2014; Prepared Statement</h2>
+
+<p>The fundamental problem of the SQL injection vulnerability is the failure to separate code from data. When constructing a SQL statement, the program (e.g. PHP program) knows which part is data and which part is code. Unfortunately, when the SQL statement is sent to the database, the boundary has disappeared; the boundaries that the SQL interpreter sees may be different from the original boundaries that was set by the developers. To solve this problem, it is important to ensure that the view of the boundaries are consistent in the server-side code and in the database. The most secure way is to use <strong>prepared statement</strong>.</p>
+<p>To understand how prepared statement prevents SQL injection, we need to understand what happens when SQL server receives a query. In the compilation step, queries first go through the parsing and normalization phase, where a query is checked against the syntax and semantics. The next phase is the compilation phase where keywords&#xA0;(e.g. SELECT, FROM, UPDATE, etc.) are converted into a format understandable to machines. Basically, in this phase, query is interpreted. In the query optimization phase, the number of different plans are considered to execute the query, out of which the best optimized plan is chosen. The chosen plan is store in the cache, so whenever the next query comes in, it will be checked against the content in the cache; if it&#x2019;s already present in the cache, the parsing, compilation and query optimization phases will be skipped. The compiled query is then passed to the execution phase where it is actually executed.</p>
+<p>Prepared statement comes into the picture after the compilation but before the execution step. A prepared statement will go through the compilation step, and be turned into a pre-compiled query with empty placeholders for data. To run this pre-compiled query, data need to be provided, but these data will not go through the compilation step; instead, they are plugged directly into the pre-compiled query, and are sent to the execution engine. Therefore, even if there is SQL code inside the data, without going through the compilation step, the code will be simply treated as part of data, without any special meaning. This is how prepared statement prevents SQL injection attacks.</p>
+<p>Here is an example of how to write a prepared statement in PHP. We use a SELECT statement in the following example. We show how to use prepared statement to rewrite the code that is vulnerable to SQL injection attacks.</p>
+<pre data-role="codeBlock" data-info="php" class="language-php"><span class="token variable">$sql</span> <span class="token operator">=</span> <span class="token string double-quoted-string">&quot;SELECT name, local, gender
+        FROM USER_TABLE
+        WHERE id = <span class="token interpolation"><span class="token variable">$id</span></span> AND password =&apos;<span class="token interpolation"><span class="token variable">$pwd</span></span>&apos; &quot;</span><span class="token punctuation">;</span>
+<span class="token variable">$result</span> <span class="token operator">=</span> <span class="token variable">$conn</span><span class="token operator">-&gt;</span><span class="token function">query</span><span class="token punctuation">(</span><span class="token variable">$sql</span><span class="token punctuation">)</span>
+</pre><p>The above code is vulnerable to SQL injection attacks. It can be rewritten to the following</p>
+<pre data-role="codeBlock" data-info="php" class="language-php"><span class="token variable">$stmt</span> <span class="token operator">=</span> <span class="token variable">$conn</span><span class="token operator">-&gt;</span><span class="token function">prepare</span><span class="token punctuation">(</span><span class="token string double-quoted-string">&quot;SELECT name, local, gender
+                        FROM USER_TABLE
+                        WHERE id = ? and password = ? &quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// Bind parameters to the query</span>
+<span class="token variable">$stmt</span><span class="token operator">-&gt;</span><span class="token function">bind_param</span><span class="token punctuation">(</span><span class="token string double-quoted-string">&quot;is&quot;</span><span class="token punctuation">,</span> <span class="token variable">$id</span><span class="token punctuation">,</span> <span class="token variable">$pwd</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$stmt</span><span class="token operator">-&gt;</span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$stmt</span><span class="token operator">-&gt;</span><span class="token function">bind_result</span><span class="token punctuation">(</span><span class="token variable">$bind_name</span><span class="token punctuation">,</span> <span class="token variable">$bind_local</span><span class="token punctuation">,</span> <span class="token variable">$bind_gender</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$stmt</span><span class="token operator">-&gt;</span><span class="token function">fetch</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</pre><p>Using the prepared statement mechanism, we divide the process of sending a SQL statement to the database into two steps. The first step is to only send the code part, i.e., a SQL statement without the actual the data. This is the prepare step. As we can see from the above code snippet, the actual data are replaced by question marks (?). After this step, we then send the data to the database using <code>bind_param()</code>. The database will treat everything sent in this step only as data, not as code anymore. It binds the data to the corresponding question marks of the prepared statement. In the <code>bind_param()</code> method, the first argument <code>&#x201C;is&#x201D;</code> indicates the types of the parameters: <code>i</code> means that the data in <code>$id</code> has the integer type, and <code>s</code> means that the data in <code>\$pwd</code> has the string type.</p>
+<p>In this task, we will use the prepared statement mechanism to fix the SQL injection vulnerabilities. For the sake of simplicity, we created a simplified program inside the <code>defense</code> folder. We will make changes to the files in this folder. If you point your browser to the following URL, you will see a page similar to the login page of the web application. This page allows you to query an employee&#x2019;s information, but you need to provide the correct user name and password.</p>
+<pre data-role="codeBlock" data-info="text" class="language-text">http://www.seed-server.com/defense/
+</pre><p>The data typed in this page will be sent to the server program <code>getinfo.php</code>, which invokes a program called <code>unsafe.php</code>. The SQL query inside this PHP program is vulnerable to SQL injection attacks. Your job is modify the SQL query in <code>unsafe.php</code> using the prepared statement, so the program can defeat SQL injection attacks. Inside the lab setup folder, the <code>unsafe.php</code> program is in the folder. You can directly modify the program there. After you are done, you need to rebuild and restart the container, or the changes will not take effect. You can also use the <code>docker cp</code> command to copy the file into the running container, and vice versa.</p>
+<p>You can also modify the file inside the running container. On the running container, the <code>unsafe.php</code> program is inside . The downside of this approach is that in order to keep the docker image small, we have only installed a very simple text editor called <code>nano</code> inside the container. It should be sufficient for simple editing. If you do not like this editor, you can always use <code>apt install</code> to install your favorite command-line editor inside the container. This installation will be discarded after the container is shutdown and destroyed. If you want to make it permanent, add the installation<br>
+command to the <code>Dockerfile</code> inside the folder.</p>
+
+      </div>
+      
+      
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    </body></html>
