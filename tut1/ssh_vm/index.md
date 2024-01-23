@@ -20,11 +20,6 @@ Please refer to [Install SEED VM on VirtualBox](https://github.com/seed-labs/see
 > username: seed  
 > password: dees
 
-![VM Network panel](VM_network_conf.png)
-
-The following figure shows what NAT Network looks like. Please refer to [VirtualBox Network Settings: Complete Guide](https://www.nakivo.com/blog/virtualbox-network-setting-guide/) or [Virtual Networking](https://www.virtualbox.org/manual/ch06.html) if interested.
-![NAT network](NAT_network.png)
-
 ## Step 2: Set Up SSH Server Service in VM
 
 ```bash
@@ -55,8 +50,15 @@ Go to VirtualBox/Preferences/Network (VirtualBox 6.x), edit your NATNetwork and 
 > Guest IP: 10.0.2.4 (type `ifconfig` in terminal of VM to check)  
 > Guest Port: 22 (SSH default port)
 
+<!-- The following figure shows what NAT Network looks like. Please refer to [VirtualBox Network Settings: Complete Guide](https://www.nakivo.com/blog/virtualbox-network-setting-guide/) or [Virtual Networking](https://www.virtualbox.org/manual/ch06.html) if interested.
+![NAT network](NAT_network.png) -->
+
 ![VirtualBox Network panel](port_forwarding.png)
 ![Port forwarding rule](rule.png)
+
+After adding the rule, modify the network configuration of VM to use NAT Network.
+
+![VM Network panel](VM_network_conf.png)
 
 ## Step 4: Set Up SSH Client Service in Host
 
@@ -123,7 +125,7 @@ Install VSCode in your local machine and install `Remote - SSH` extension in VSC
 > Remote - SSH  
 > Remote - SSH: Editing Configuration Files
 >
-> **Hex**
+> **Hex** (Optional)
 >
 > Hex Editor
 >
